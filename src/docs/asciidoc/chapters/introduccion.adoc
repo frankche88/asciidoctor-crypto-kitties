@@ -1,0 +1,34 @@
+[[section-introduction-and-goals]]
+= Introducción
+
+Este trabajo esta orientado a la investigación de BLOCKCHAIN usando 
+la plataforma Ethereum como plataforma de implementación, 
+la solución a implementar se llama crypto-kitties.
+
+Crypto-kitties es un juego se trata de comprar, 
+vender y criar gatitos virtuales adquiridos con ether (ETH), 
+la moneda digital usada por Ethereum.
+
+Ethereum es una plataforma digital que adopta la tecnología blockchain
+y expande su uso a una gran variedad de aplicaciones. 
+
+La plataforma Ethereum fue creada en 2015 por el programador Vitalik Buterin, 
+con la perspectiva de crear un instrumento para aplicaciones descentralizadas y colaborativas. 
+Ether (ETH) es un token que puede ser utilizado en transacciones que usen este software. 
+Como bitcoin, ether existe como parte de un sistema financiero autónomo de pares, 
+libre de intervención gubernamental. 
+También como bitcoin, el valor de ether se ha disparado en un corto periodo de tiempo.
+
+.Objetivos
+. Implementar una juego usando la tecnología blockchain.
+. Construir una aplicación web.
+. Profundizar el conocimiento de blockchain.
+
+== Partes interesadas (Stakeholders)
+
+[options="header",cols="1,2,2"]
+|===
+|Rol/Nombre|Contacto|Expectativas
+| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
+| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+|===

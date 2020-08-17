@@ -1,0 +1,73 @@
+
+asciidoctor{
+
+    baseDirFollowsSourceDir()
+    logDocuments true
+    configurations 'asciidoctorExt'
+
+    sources {
+        include 'index.adoc'
+    }
+
+    asciidoctorj{
+
+        docExtensions {
+            block_macro (name: 'starts') { parent, target, attributes ->
+                String content = "_${attributes.get("text")}_"
+                int up = (attributes.get("up") ?: 10) as int
+                int votes = target as int
+                (1..votes).each{ content ="$content icon:star[] "}
+                (votes..up-1).each{ content ="$content icon:star-o[] "}
+                content = "$content $votes/$up"
+                createBlock(parent, "paragraph", [content], [:], [:])
+            }
+
+
+            block('typewriter') {
+                parent, reader, attributes ->
+                    def lines = reader.readLines()
+                    def attr = [role:'typewriter']
+                    return createBlock(parent, 'paragraph', lines, attr, [:])
+            }
+
+            postprocessor {
+                document, output ->
+
+                    output.replace("</body>","""<script>
+                let speed = 50;
+                
+                function typeWriter(v) {
+                  let i = v.getAttribute("typewriter-index")
+                  let txt = v.getAttribute("typewriter-original")
+                  
+                  if (i < txt.length) {
+                    v.getElementsByTagName("P")[0].innerHTML += txt.charAt(i);                    
+                  }else{
+                    if( i > txt.length+15 ){
+                        i=-1;
+                        v.getElementsByTagName("P")[0].innerHTML = ''
+                    }
+                  }                  
+                  v.setAttribute("typewriter-index", ++i)                                            
+                }
+                
+                function typeWriterAll(){
+                    [].forEach.call(document.getElementsByClassName('typewriter'), function(v,i,a) {
+                        typeWriter(v)
+                    })
+                    setTimeout(typeWriterAll, speed);
+                }
+                                    
+                [].forEach.call(document.getElementsByClassName('typewriter'), function(v,i,a) {
+                    v.setAttribute("typewriter-original", v.innerText)
+                    v.setAttribute("typewriter-index", 0)
+                    v.getElementsByTagName("P")[0].innerHTML = ''
+                })
+                
+                setTimeout(typeWriterAll, speed);
+                
+                </script>""")
+            }
+        }
+    }
+}

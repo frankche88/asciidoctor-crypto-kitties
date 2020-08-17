@@ -1,0 +1,42 @@
+
+kindlegen {
+    agreeToTermsOfUse = true
+}
+
+asciidoctorEpub{
+    useIntermediateWorkDir()
+    baseDirFollowsSourceDir()
+    logDocuments true
+    resources{
+        from(sourceDir) {
+            include '**'
+        }
+    }
+    configurations 'asciidoctorExt'
+    asciidoctorj{
+        options to_dir : "../tmp/asciidoctorEpub.intermediate"
+
+        attributes imagesdir: file("build/tmp/asciidoctorEpub.intermediate/images"),
+                imagesoutdir: file("build/tmp/asciidoctorEpub.intermediate/images"),
+                'epub3-stylesdir':'epubStyle'
+    }
+    sources {
+        include 'index.adoc'
+    }
+
+    asciidoctorj {
+        docExtensions {
+            block_macro(name: 'starts') { parent, target, attributes ->
+                String content = "_${attributes.get("text")}_"
+                int up = (attributes.get("up") ?: 10) as int
+                int votes = target as int
+                (1..votes).each { content = "$content icon:star[] " }
+                (votes..up - 1).each { content = "$content icon:star-o[] " }
+                content = "$content $votes/$up"
+                createBlock(parent, "paragraph", [content], [:], [:])
+            }
+        }
+    }
+    
+    ebookFormats KF8
+}

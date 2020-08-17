@@ -1,0 +1,52 @@
+
+revealjsPlugins{
+    github 'rajgoel', {
+        organisation = 'rajgoel'
+        repository = 'reveal.js-plugins'
+        branch = 'master'
+    }
+    github 'denehyg', {
+        organisation = 'denehyg'
+        repository = 'reveal.js-menu'
+        branch = 'master'
+    }
+}
+
+asciidoctorRevealJs{
+
+    logDocuments true
+    configurations 'asciidoctorExt'
+
+    sourceDir 'src/docs/asciidoc/slides'
+    sources {
+        include 'index.adoc'
+    }
+
+    asciidoctorj {
+        attributes 'sourcedir': 'src/docs/asciidoc/slides',
+                'imagesDir': 'images',
+                'icons': 'font',
+                'iconfont-name': 'fontawesome-5.8.0'
+    }
+
+    revealjsOptions {
+        controls = true
+        slideNumber = true
+        progressBar = true
+        pushToHistory = true
+        overviewMode = true
+        touchMode = true
+        backgroundTransition = 'convex' //none , fade, slide, convex, concave, zoom
+        theme = 'sky' //'black', 'beige' , 'league', 'night', 'serif', 'simple', 'sky', 'solarized'
+    }
+
+    plugins 'rajgoel/chart/Chart.min.js',
+            'rajgoel/chart/csv2chart.js',
+            'rajgoel/chalkboard/chalkboard.js',
+            'rajgoel/embed-tweet/embed-tweet.js',
+            'rajgoel/spreadsheet/spreadsheet.js',
+            'denehyg/menu.js'
+
+    pluginConfigurationFile 'src/docs/asciidoc/slides/plugin-configuration.js'
+
+}

@@ -1,0 +1,101 @@
+= Vista de Requerimientos: Requerimientos de crypto-kitties
+
+Los requerimientos a implementar en crypto-kitties son:
+
+. El usuario deberá poder comprar gatos
+. El usuario puede poner a la venta sus gatos
+. El usuario podrá alquilar sus gato para tener crías
+. El usuario podrá alquilar un gato de otro usuario para obtener nuevas . crías
+. El usuario podrá filtrar los gatos por sus características especiales
+. El usuario puede registrarse en la plataforma web
+. El usuario puede logearse en la plataforma web
+. El usuario puede buscar gatos por su ID
+. El usuario puede ordenar los gatos por su generación, edad, precio, . coldown y likes
+. El usuario podra visualizar un catalogo de todos los gatos
+. Cada gato debe tener un ADN unico asignado
+. Cada gato debe tener un precio, una edad, un coldown y una generación . asignada
+. Cada gato debe tener la información de sus padres
+. Cada gato debe tener un id único
+. El usuario puede acceder a las guías de uso del portal web
+. El gato que esta en periodo de gestación debe quedar inhabilitado . mientras dure el proceso y el coldown para tener otra cría
+. En base al ADN se deben construir al gato gráficamente
+
+
+
+
+= Atributos de calidad
+
+Para poder identificar los atributos de calidad se utilizó el framework https://www.neverletdown.net/p/mini-quality-attribute-workshop.html[mini-QAW].
+
+Para ello listamos el resultado de dicho trabajo.
+
+== Eficiencia
+* Escenarios
+. Los usuarios de la aplicación inician una transacción (Compra, venta, etc),
+en un entorno de operación normal, el sistema procesa la transacción y muestra el resultado, los datos deben de ser replicados a todos los nodos en máximo 15 minutos
++
+[options="",cols="1h,2"]
+|===
+|Origen|Usuarios del sistema
+|Estimulo|Inicio de una transacción (Compra, venta, etc)
+|artefacto|Sistema.
+|Entorno del sistema|operación normal.
+|Respuesta|La transacción es procesada y mostrada al usuario.
+|Medición de la respuesta|La data debe de ser guardada y replicada a todos los nodos en máximo 15 minutos.
+|===
+
+== Seguridad
+
+* Escenarios
+. Un usuario no autenticado inicia de una transacción (Compra, venta, etc), en un entorno de ejecución normal, el sistema rechaza la operación, la identidad del usuario se debe de verificar en menos de 1 segundo.
++
+[options="",cols="1h,2"]
+|===
+|Origen|usuario no autenticado
+|Estimulo|Inicio de una transacción (Compra, venta, etc)
+|artefacto|Identity verifier.
+|Entorno del sistema|operación normal.
+|Respuesta|el sistema no le permite realizar la operación.
+|Medición de la respuesta|La identidad del usuario debe de ser validad en máximo 1 segundo.
+|===
+. Un usuario autenticado intenta modificar una característica de su gato, en un entorno de ejecución normal, el distributed legder rechaza la operación, ningún se puede modificar en el legder.  
++
+[options="",cols="1h,2"]
+|===
+|Origen|usuario autenticado
+|Estimulo|Usuario desea modificar las características de su item (gato, mascota)
+|artefacto|distributed ledger.
+|Entorno del sistema|operación normal.
+|Respuesta|Transacción rechazada.
+|Medición de la respuesta|Ningún registro puede ser modificado.
+|===
+
+== Disponibilidad
+* Escenarios
+. Cuando el monitor de nodos verifica que la cantidad de nodos de tipo FULL disminuye a menos de 10, el automated node deployer crea los nodos para garantizar la cantidad de nodos full disponibles, cada nodo debe de crearse en menos de 2 segundos.
++
+[options="",cols="1h,2"]
+|===
+|Origen|Monitor de nodos
+|Estimulo|La cantidad de nodos full disminuya a menos de 10
+|artefacto|Automated Node deployer.
+|Entorno del sistema|operación normal.
+|Respuesta|Se crean nodos full hasta completar la cantidad mínima.
+|Medición de la respuesta|cada nodo FULL se debe de crear en menos de 2 segundos.
+|===
+
+== Interoperabilidad​ 
+* Escenarios
+. Los usuarios de la aplicación inician una transacción (Compra, venta, etc),
+en un entorno de operación normal, se almacena toda la información de la transacción, los datos deben de ser replicados a todos los nodos en máximo 15 minutos 
++
+[options="",cols="1h,2"]
+|===
+|Origen|Usuario de sistema
+|Estimulo|Se registra una nueva transacción
+|artefacto|distributed ledger.
+|Entorno del sistema|operación normal.
+|Respuesta|Se guardará toda la información de la transacción(full data store)
+|Medición de la respuesta|La data debe de ser guardada y replicada a todos los nodos en máximo 15 minutos.
+|===
+

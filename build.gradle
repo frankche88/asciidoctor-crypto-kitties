@@ -1,0 +1,129 @@
+plugins {
+    id 'org.asciidoctor.jvm.convert' version '3.2.0'
+    id 'org.asciidoctor.jvm.epub' version '3.2.0'
+    id 'org.asciidoctor.jvm.pdf' version '3.2.0'
+//    id 'org.asciidoctor.jvm.revealjs' version '3.2.0'
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+    maven { url 'http://rubygems-proxy.torquebox.org/releases' }
+    mavenCentral()
+}
+
+configurations {
+    asciidoctorExt
+}
+
+dependencies {
+    asciidoctorExt group: 'com.puravida.asciidoctor', name: 'asciidoctor-barcode', version:'2.4.1'
+    asciidoctorExt group: 'com.credibledoc', name: 'plantuml-core', version: '1.0.18'
+    asciidoctorExt group: 'org.scilab.forge', name: 'jlatexmath', version: '1.0.7'
+}
+
+ext{
+    documentVersion = '0.0.1'
+}
+
+asciidoctorj {
+
+    version '2.1.0'
+
+    modules{
+        epub{
+            version '1.5.0-alpha.18'
+        }
+        diagram{
+            version '2.0.2'
+        }
+        pdf{
+            version '1.5.3'
+        }
+    }
+
+    options doctype: 'article ', ruby:'erubis'
+
+    attributes 'sourcedir': 'src/docs/asciidoc',
+            'source-highlighter': 'coderay',
+            toc: 'left',
+            idprefix: '',
+            idseparator: '-',
+            'icons': 'font',
+            'iconfont-name': 'fontawesome-5.8.0',
+            'setanchors': '',
+            'listing-caption':'',
+            'imagesdir': 'images',
+            version: documentVersion,
+            revnumber: documentVersion
+
+
+
+    docExtensions {
+        block(name:'calendar', contexts:[':listing']) {
+            parent, reader, attributes ->
+                def planning = [:]
+                reader.readLines().each{ line->
+                    def day = line.split(' ').first()
+                    def plan = line.split(' ').drop(1).join(' ')
+                    planning[day] = planning[day] ?: []
+                    planning[day] << plan
+                }
+                
+                def content = [
+                        '[cols=a7*,options=header]',
+                        '|===',
+                        '|L|M|X|J|V|S|D'
+                ]
+
+                int year = attributes.get('year') as int
+                int month = attributes.get('month') as int
+                Calendar c = Calendar.instance
+                c.firstDayOfWeek = Calendar.MONDAY
+
+                c[Calendar.DAY_OF_MONTH] = 1
+                c[Calendar.YEAR] = year
+                c[Calendar.MONTH]= month-1
+
+                while( c[Calendar.DAY_OF_WEEK] != Calendar.MONDAY) {
+                    c--
+                }
+
+                while( c[Calendar.MONTH] < month){
+                    int d = c[Calendar.DAY_OF_MONTH]
+                    def lines = []
+                    if( c[Calendar.MONTH] < month-1)
+                        lines << '| \n'
+                    else {
+                        lines << "|$d \n"                         
+                        planning["$d"]?.each{
+                            lines << "$it \n"
+                        }
+                    }
+                    content << lines.join('\n')
+                    c++
+                }
+
+                while( c[Calendar.DAY_OF_WEEK] != Calendar.MONDAY) {
+                    int d = c[Calendar.DAY_OF_MONTH]
+                    content << '| '
+                    c++
+                }
+
+                content << '|==='
+                parseContent(parent,content)
+                null
+        }
+    }
+}
+
+apply from:'gradle/html.gradle'
+apply from:'gradle/pdf.gradle'
+//apply from:'gradle/kindle.gradle'
+
+//apply from:'gradle/revealjs.gradle'
+//asciidoctor.dependsOn asciidoctorRevealJs
+//asciidoctorPdf.dependsOn asciidoctorRevealJs
+//asciidoctorEpub.dependsOn asciidoctorRevealJs
+
+build.dependsOn  asciidoctor, asciidoctorPdf //, asciidoctorEpub

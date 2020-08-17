@@ -1,0 +1,39 @@
+
+build-gradle:
+ image: openjdk:8-jdk
+ stage: build
+ script:
+   - apt-get update
+   - apt-get -y install graphviz
+   - ./gradlew build
+ artifacts:
+   paths:
+   - build/docs
+
+build-maven:
+ image: maven:3.6.1-jdk-8
+ stage: build
+ script:
+   - apt-get update
+   - apt-get -y install graphviz
+   - mvn
+ artifacts:
+   paths:
+   - target/generated-docs
+
+pages:
+ stage: deploy
+ script:
+ - mkdir public
+ - mkdir public/maven
+ - cp -R build/docs/asciidoc/* public
+ - cp -R build/docs/asciidocPdf/*.pdf public/
+ - cp -R build/docs/asciidocEpub/*.mobi public/
+ - cp -R target/generated-docs/* public/maven
+ artifacts:
+   paths:
+    - public
+ dependencies:
+  - build-gradle
+  - build-maven
+ when: manual
