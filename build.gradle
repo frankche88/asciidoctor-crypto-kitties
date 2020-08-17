@@ -42,7 +42,7 @@ asciidoctorj {
         }
     }
 
-    options doctype: 'article ', ruby:'erubis'
+    options doctype: 'book', ruby:'erubis'
 
     attributes 'sourcedir': 'src/docs/asciidoc',
             'source-highlighter': 'coderay',
@@ -126,4 +126,4 @@ apply from:'gradle/pdf.gradle'
 //asciidoctorPdf.dependsOn asciidoctorRevealJs
 //asciidoctorEpub.dependsOn asciidoctorRevealJs
 
-build.dependsOn  asciidoctor, asciidoctorPdf //, asciidoctorEpub
+build.dependsOn  asciidoctor, asciidoctorPdf//, asciidoctorEpub

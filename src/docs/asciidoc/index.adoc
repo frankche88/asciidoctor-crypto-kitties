@@ -6,11 +6,28 @@ Frank Jonislla; Bhering Paucar; Ivan Alarcon
 ifeval::["{backend}" == "html5"]
 :toc: left
 endif::[]
+//
+// Configuracion no epub
+ifndef::ebook-format[]
+:leveloffset: 1
+endif::ebook-format[]
+//
+// Configuracion epub
+ifdef::ebook-format[]
+:front-cover-image: image:jacket/cover.png[Front Cover,1050,1600]
+:doctype: book
+:publication-type: book
+:producer: Asciidoctor
+:keywords: Asciidoctor, samples, e-book, EPUB3, KF8, MOBI
+:copyright: CC-BY-SA 3.0
+// Si quieres que NO aparezca el avatar y el autor usa :publication-type: book
+// Si quieres que aparezca usa: anthology, magazine, journal o article
+:publication-type: anthology
+:username: jorge-aguilera
+endif::ebook-format[]
 
 include::chapters/introduccion.adoc[]
-<<<
 include::chapters/chapter1.adoc[]
-<<<
 include::chapters/chapter2.adoc[]
 include::chapters/chapter3.adoc[]
 include::chapters/chapter4.adoc[]
