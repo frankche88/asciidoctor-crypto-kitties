@@ -2,25 +2,69 @@
 
 Los requerimientos a implementar en crypto-kitties son:
 
-. El usuario deberá poder comprar gatos
-. El usuario puede poner a la venta sus gatos
-. El usuario podrá alquilar sus gato para tener crías
-. El usuario podrá alquilar un gato de otro usuario para obtener nuevas . crías
-. El usuario podrá filtrar los gatos por sus características especiales
-. El usuario puede registrarse en la plataforma web
-. El usuario puede logearse en la plataforma web
-. El usuario puede buscar gatos por su ID
-. El usuario puede ordenar los gatos por su generación, edad, precio, . coldown y likes
-. El usuario podra visualizar un catalogo de todos los gatos
-. Cada gato debe tener un ADN unico asignado
-. Cada gato debe tener un precio, una edad, un coldown y una generación . asignada
-. Cada gato debe tener la información de sus padres
-. Cada gato debe tener un id único
-. El usuario puede acceder a las guías de uso del portal web
-. El gato que esta en periodo de gestación debe quedar inhabilitado . mientras dure el proceso y el coldown para tener otra cría
-. En base al ADN se deben construir al gato gráficamente
+. Como usuario del sistema,
+quiero comprar gatos,
+para coleccionarlos.
 
+. Como usuario del sistema,
+quiero vender mis gatos,
+para ganar dinero.
 
+. Como usuario del sistema,
+quiero alquilar mis gatos,
+para aparearlos con gatos de otros usuarios.
+
+. Como usuario del sistema,
+quiero alquilar gatos de otros usuarios,
+para que aparearlos con mis gatos.
+
+. Como usuario del sistema,
+quiero ver el catalogo de mis gatos,
+para poder ver las características de cada uno de ellos.
+
+. Como usuario del sistema,
+quiero cada uno de mis gatos tenga un ADN único,
+para que mi gato sea único.
+
+. Como usuario del sistema,
+quiero conocer los padres los padres de mi gato,
+para saber su pedidrí.
+
+. Como usuario del sistema,
+quiero que mi gato tenga las siguientes características: ID único,
+edad,
+coldown y generación,
+para poder determinar su precio.
+
+. Como usuario del sistema,
+quiero la opción de dar likes a cualquier gato del juego,
+para mostrar mi admiración y gusto por el gato.
+
+. Como usuario del sistema,
+quiero listar los gatos del juego con los siguientes filtros: edad,
+coldown,
+generación y precio,
+para poder comprarlos u alquilarlos.
+
+. Como usuario del sistema,
+quiero buscar un gato por su ID,
+para poder comprarlos u alquilarlos.
+
+. Como sistema,
+quiero que cada gato pierda coldown cada vez que se aparee,
+para poder controlar la reproducción de los gatos.
+
+. Como internauta,
+quiero registrarme en el sistema,
+para poder ser parte de este juego. 
+
+. Como usuario,
+quiero ingresar al sistema con credenciales únicas,
+para acceder al sistema y éste me muestre mi bandeja de gatos. 
+
+. Como sistema,
+quiero mostrar una representación gráfica de los gatos basado en su ADN,
+para que el usuario puedan ver las características de su gato de forma gráfica.
 
 
 = Atributos de calidad

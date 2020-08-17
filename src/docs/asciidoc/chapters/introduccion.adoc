@@ -28,7 +28,8 @@ También como bitcoin, el valor de ether se ha disparado en un corto periodo de 
 
 [options="header",cols="1,2,2"]
 |===
-|Rol/Nombre|Contacto|Expectativas
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+|Rol/Nombre|Descripción|Expectativas
+| _Jugador_ | Usuario del juego | _Conocer que le ofrece la plataforma para ayudarlo a sacarle el mejor provecho_
+| _Arquitecto de software_ |  | _Mostrar a los interesados como se debe de construir la aplicación_
+| _Desarrollador_ |  | _Desarrollador que necesita conocer la arquitectura de la aplicación que va a construir y como lo hará_
 |===

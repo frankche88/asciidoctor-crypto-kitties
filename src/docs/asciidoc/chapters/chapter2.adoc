@@ -1,2 +1,9 @@
 [[section-architecture-constraints]]
 = Restricciones de la Arquitectura
+
+* Se debe de implementar usando blockchain
+* La tecnología a usar debe de ser ethereum (Metamask)
+* Se deben de considerar como mínimo 10 nodos full.
+* El aplicativo deberá ser responsive
+* Los gatos se pueden comprar desde cualquier lugar del mundo
+* Se utilizarán unicamente imágenes en formato SVG
