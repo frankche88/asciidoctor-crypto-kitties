@@ -71,6 +71,12 @@ para que el usuario puedan ver las características de su gato de forma gráfica
 
 Para poder identificar los atributos de calidad se utilizó el framework https://www.neverletdown.net/p/mini-quality-attribute-workshop.html[mini-QAW].
 
+
+[vega,"spider chart", svg]
+----
+include::../charts/spider_chart.vega[]
+----
+
 Para ello listamos el resultado de dicho trabajo.
 
 == Eficiencia
@@ -142,8 +148,3 @@ en un entorno de operación normal, se almacena toda la información de la trans
 |Respuesta|Se guardará toda la información de la transacción(full data store)
 |Medición de la respuesta|La data debe de ser guardada y replicada a todos los nodos en máximo 15 minutos.
 |===
-
-[vega,"spider chart", svg]
-----
-include::../charts/spider_chart.vega[]
-----
