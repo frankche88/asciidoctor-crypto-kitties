@@ -1,0 +1,60 @@
+@startuml diagrama_componentes
+'!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+!include <c4/C4_Component.puml>
+
+!include sprite/blockchain_app.sprite
+!include sprite/auto_node_deployer.sprite
+!include sprite/consensus_processor.sprite
+!include sprite/identity_federator.sprite
+!include sprite/identity_verifier.sprite
+!include sprite/ledger.sprite
+!include sprite/ledgerreplicator.sprite
+!include sprite/live_node_migrator.sprite
+!include sprite/node_monitor.sprite
+!include sprite/node_placement_monitor.sprite
+
+LAYOUT_WITH_LEGEND()
+skinparam titleFontSize 25
+
+title <b>Diagrama de componentes - API Application
+
+' Externo
+Container(backend_api, "API Application", "Javascript, web3js, Docker Container", "Provee la funcionalidad del juego a través de un API")
+
+Component(identity_federator, "Security Component", "Identity federator", "<$identity_federator{scale=0.90,color=#1f48ff}>\nGestiona la identidad de los usuarios de la red.")
+
+Component(identity_verifier, "Security Component", "Identity verifier", "<$identity_verifier{scale=0.90,color=#008200}>\nVerifica la identidad del usuario y la almacena")
+
+Container_Boundary(api, "blockchain") {
+    Component(blockchainapp, "crytokitties contract", "blockchain-app", "<$blockchain_app{scale=0.90,color=#1f48ff}>\nGestiona la logica del app blockchain")
+    
+    ContainerDb(localledger, "ledger", "Ledger", "<$ledger>\nGuarda información inmutable del juego.")
+
+    ContainerDb(replicator, "Replicator", "Ledger replicator", "<$ledgerreplicator{scale=0.90}>\nReplica el ledger a los nodos remotos.")
+
+    Rel(backend_api, blockchainapp, "Uses")
+    Rel_Neighbor(blockchainapp, localledger, "Read & write to")
+    Rel(localledger, replicator, "Read")
+    
+}
+
+Container_Boundary(remoteNode, "Remote node") {
+    Component(blockchainapp2, "crytokitties contract", "blockchain-app", "<$blockchain_app{scale=0.90,color=#1f48ff}>\nGestiona la logica del app blockchain")
+    
+    ContainerDb(remoteledger, "ledger", "Ledger", "<$ledger>\nGuarda información inmutable del juego.")
+
+    Rel(replicator, remoteledger, "replicate to")
+
+    Rel_Neighbor(blockchainapp2, remoteledger, "Read & write to")
+    
+    
+}
+
+Rel(backend_api, identity_verifier, "Uses")
+
+Rel(identity_federator, remoteNode, "Uses", "JSON/HTTPS")
+
+Rel(identity_verifier, identity_federator, "Uses", "JSON/HTTPS")
+
+
+@enduml

@@ -2,28 +2,21 @@
 = Estrategia de solución
 
 
-[role="arc42help"]
-****
-.Contenido
-Un resumen corto y explicación de las estrategias y decisiones fundamentales para la solución que le dan forma a la
-arquitectura del sistema.
-Estas incluyen:
-
-* Decisiones tecnológicas
-* Decisiones acerca de la descomposición a alto nivel de un sistema, por ejemplo, el uso de algún patrón de diseño
-o de arquitectura.
-* Decisiones en como alcanzar metas de calidad claves
-* Decisiones organizacionales relevantes, como el seleccionar un proceso de desarrollo o delegar ciertas tareas a terceros.
-
-.Motivación
-Estas decisiones son las piedras angulares de la arquitectura. Son la base de muchas otras decisiones detalladas o reglas de implementación.
-
-.Forma
-Realice la explicación de las deciciones clave de manera breve. 
-
-Justifique las decisiones y porque se realizaron de esa manera, basado en el planteamiento del problema,
-las metas de calidad y restricciones clave.
-Refiérase a los detalles en las secciones posteriores.
-****
+El core de Cryptokitties es simple pero poderosa basada en una arquitectura de contenedores, usando docker, la cual se pueda desplegar en cualesquiera de las nubes publicas del mercado.
 
 
+La aplicación esta centrada la tecnología blockchain debido a que la inmutabilidad de los datos es un requerimiento principal; por ello se tuvieron las siguientes consideraciones.
+
+* Se aplicó el modelo de captura de datos de negocio parcial, ya que se está usando un blockchain pública y no es necesario tener toda la información del juego en la blockchain; la parte que nos interesa que se permanezca inmutable son las características del gato y las transacciones realizadas sobre este item. +
+Se descarta el modelo de captura de datos de negocio total, puesto que la información del juego cuenta con su propio almacén de datos que puede cambiar en el tiempo; también se descarta el modelo de datos de log de acceso; puesto que esta información no es importante para el negocio cryptokitties.
+
+* El patrón "Federated Chain pattern" será aplicado para establecer el mecanismo "identity federator" capaz de realizar la autenticación basado en certificado digital
+
+* El mecanismo "identity verifier" será usado para cada usuario que requiera acceder al juego que nos permitirá un mecanismo extra a autenticación.
+
+
+* Los patrones "Auto-Scaling Nodes" y "Geo Scaling" serán aplicados usando los mecanismos: "placement monitor", "live node migrator" y "automated node deployer". Si la red identifica que se redujo la cantidad de nodos full requeridos, el mecanismo "live node migrator" intentará mover nodos full de una región que cuente con mas de 15 nodos full a la region que no cumpla su cuota de nodos full; si este mecanismo falla, entonces el "automated node deployer" será usado para generar nuevos nodos full para la región.
+
+* El patrón "Guaranteed Minimum full Nodes" se aplicará a través del mecanismo "node monitor" que se asegurará que cada región cuente como mínimo con 10 nodos full.
+
+* No se aceptaran transacciones off-chain, para garantizarlo se utilizará el patron "Forced On-Chain"

@@ -4,14 +4,7 @@
 == Contexto de Negocio
 
 
-**<Diagrama o Tabla>**
+image:../images/c4model/diagrama_contexto.png["Diagrama de contexto"]
 
-**<optionally: Explanation of external domain interfaces>**
-
-== Contexto Técnico
-
-**<Diagrama o Tabla>**
-image:../images/05_building_blocks-ES.png["Jerarquía de bloques de construcción"]
-**<Opcional: Explicación de las interfaces técnicas>**
-
-**<Mapeo de Entrada/Salida a canales>**
+// == Contexto de Negocio
+// ** Diagrama de despliegue **

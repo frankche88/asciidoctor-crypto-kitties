@@ -1,0 +1,84 @@
+@startuml auto_escalamiento
+
+!include sprite/blockchain_app.sprite
+!include sprite/auto_node_deployer.sprite
+!include sprite/consensus_processor.sprite
+!include sprite/identity_federator.sprite
+!include sprite/identity_verifier.sprite
+!include sprite/ledger.sprite
+!include sprite/ledgerreplicator.sprite
+!include sprite/live_node_migrator.sprite
+!include sprite/node_monitor.sprite
+!include sprite/node_placement_monitor.sprite
+!include sprite/full_node.sprite
+
+!include <cloudinsight/tomcat>
+!include <cloudinsight/kafka>
+!include <cloudinsight/java>
+!include <cloudinsight/cassandra>
+
+skinparam titleFontSize 25
+title <b>Auto escalamiento
+
+allow_mixing
+
+skinparam linetype ortho
+
+skinparam rectangleBorderColor transparent
+skinparam rectangleBackgroundcolor transparent
+
+skinparam shadowing false
+
+
+
+package "Norte America" <<Card>> {
+  rectangle "\n\n\n<$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}>\n<$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#008200}><$full_node{scale=0.4,color=#008200}>" as nortamerica
+}
+
+
+package "Sur America" <<Card>> {
+rectangle "\n\n\n<$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}>\n<$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.40,color=#008200}><$full_node{scale=0.40,color=#1f48ff}>" as suramerica
+}
+
+package "Europa" <<Card>> {
+rectangle "\n\n\n<$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}>\n<$full_node{scale=0.4}><$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}>" as europa
+}
+
+package "Africa" <<Card>> {
+rectangle "\n\n\n<$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}>\n<$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}><$full_node{scale=0.4,color=#1f48ff}>" as africa
+}
+
+' ,color=#1f48ff
+rectangle "<$auto_node_deployer>\nautomated\n node deployer" as autodep
+rectangle "<$consensus_processor>\nconcensus processor" as consensusPro
+
+rectangle "<$live_node_migrator>\nlive node\n migrator" as migrator
+
+rectangle "<$node_monitor>\nnode monitor" as nodeMonitor
+rectangle "<$node_placement_monitor>\nnode placement\n monitor" as placement
+
+' Europa y marica unidos
+
+europa --[hidden]R-- nortamerica
+
+nortamerica --[hidden]R-- suramerica
+
+nodeMonitor .[#Blue]R..> consensusPro
+consensusPro <.[#Blue]R.. placement
+
+nodeMonitor .[#Blue].> placement
+
+nodeMonitor -R-> autodep
+
+placement ----R--> migrator
+
+europa .[#Blue].> nodeMonitor
+
+migrator --[#Green]U---> suramerica
+
+europa -[#Green]-> migrator
+
+autodep -[#Green]U-> nortamerica
+
+
+@enduml

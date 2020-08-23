@@ -1,0 +1,10 @@
+[[section-building-block]]
+= Building block view
+
+image:../images/c4model/diagrama_contenedores.png["Diagrama de contenedores"]
+
+
+image:../images/c4model/diagrama_componentes.png["Diagrama de componentes - API"]
+
+
+image:../images/c4model/auto_escalamiento.png["Patron auto escalamiento"]

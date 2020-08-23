@@ -1,0 +1,20 @@
+@startuml diagrama_contexto
+' !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Context.puml
+!include <c4/C4_Context.puml>
+!include <office/Users/user.puml>
+!include <office/Users/mobile_user.puml>
+!include <office/Users/administrator.puml>
+
+skinparam titleFontSize 25
+'LAYOUT_WITH_LEGEND()
+
+title <b>Diagrama de contexto del Juego Crytokitties.
+
+Person(jugador, "Jugador", "<$user> <$mobile_user>\n coleccionista de gatos virtuales")
+
+System(cryptokitties, "Juego Cryptokitties", "Permite a un jugador coleccionar gatos virtuales y ganar dinero vendiendo o alquilando sus gatos.")
+
+Rel(jugador, cryptokitties, "Uses")
+
+
+@enduml

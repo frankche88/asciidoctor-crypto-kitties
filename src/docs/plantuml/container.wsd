@@ -1,0 +1,44 @@
+@startuml diagrama_contenedores
+' !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+!include <c4/C4_Container.puml>
+!include <office/Users/user.puml>
+!include <office/Users/mobile_user.puml>
+
+skinparam titleFontSize 25
+
+LAYOUT_TOP_DOWN
+'LAYOUT_AS_SKETCH
+LAYOUT_WITH_LEGEND()
+
+title <b>Diagrama de contenedores del Juego Crytokitties.
+
+Person(jugador, "Jugador", "<$user> <$mobile_user>\n coleccionista de gatos virtuales")
+
+System_Boundary(c1, "Juego Cryptokitties") {
+    Container(web_app, "Aplicación web", "Javascript, NodeJs", "Proporciona el contenido estático del juego Cryptokitties SPA")
+    Container(spa, "Single-Page App", "JavaScript, Angular, web3js", "Provee toda la fancionalidad al jugador a trevés de un navegador web")
+    ContainerDb(database, "Database", "SQL Database", "Almacena perfil de usuario, credenciales autorizacion, etc.")
+    Container(backend_api, "API Application", "Javascript, web3js, Docker Container", "Provee la funcionalidad del juego a través de un API")
+    Container(blockchain, "blockchain", "Ethereum", "Base de datos inmutable y distribuida")
+}
+
+System_Ext(remoteblockchain, "Nodo remoto", "Base de datos inmutable y distribuida.")
+
+Rel(jugador, web_app, "Uses", "HTTPS")
+Rel(jugador, spa, "Uses", "HTTPS")
+
+
+Rel_Neighbor(web_app, spa, "Delivers")
+Rel(spa, backend_api, "Uses", "async, JSON/HTTPS")
+Rel(backend_api, blockchain, "Uses", "sync")
+
+
+Rel_Back_Neighbor(database, backend_api, "Reads from and writes to", "sync, JDBC")
+
+
+
+Rel_Neighbor(blockchain, remoteblockchain, "Syncronize", "async/sync")
+
+
+@enduml
